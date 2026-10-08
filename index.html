@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  Placeholders to fill before publishing. List them with:  grep -n "TODO_" index.html
+    TODO_AUTHOR_URL   author homepages (optional; names stay plain text until filled)
+  The canonical and og: URLs assume https://xiaomeng-yang.github.io/Event-aligned-WAM/
+  Tables marked GENERATED are rewritten by tools/extract_tables.py; edit the LaTeX, not the HTML.
+-->
+<title>Event-Aligned Visual Action Reasoning for World Action Models</title>
+<meta name="description" content="World Action Models imagine future frames before acting. We align that imagination with interaction events: dense around contact and state changes, coarse through connecting motion, and only valid actions are executed. +10.26 points DOMINO success rate over LingBot-VA.">
+<link rel="canonical" href="https://xiaomeng-yang.github.io/Event-aligned-WAM/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Event-Aligned Visual Action Reasoning for World Action Models">
+<meta property="og:description" content="Organizing a World Action Model's visual imagination around interaction events: +10.26 points DOMINO success rate over LingBot-VA, 92.30% on RoboTwin 2.0.">
+<meta property="og:url" content="https://xiaomeng-yang.github.io/Event-aligned-WAM/">
+<meta property="og:image" content="https://xiaomeng-yang.github.io/Event-aligned-WAM/static/figures/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="citation_title" content="Event-Aligned Visual Action Reasoning for World Action Models">
+<meta name="citation_author" content="Yang, Xiaomeng">
+<meta name="citation_author" content="Wu, Yushu">
+<meta name="citation_author" content="Gao, Yi">
+<meta name="citation_author" content="Lei, Yuhao">
+<meta name="citation_author" content="Zhang, Xuan">
+<meta name="citation_author" content="Zhao, Pu">
+<meta name="citation_author" content="Wang, Yanzhi">
+<meta name="citation_publication_date" content="2026/10/07">
+<meta name="citation_arxiv_id" content="2610.09427">
+<meta name="citation_pdf_url" content="https://arxiv.org/pdf/2610.09427">
+
+<link rel="icon" href="static/figures/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="static/figures/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="static/figures/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;display=swap">
+<link rel="stylesheet" href="static/css/style.css?v=20261007">
+<script src="static/js/data.js?v=20261003" defer></script>
+<script src="static/js/main.js?v=20261006-2" defer></script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-paper" viewBox="0 0 16 16"><path d="M4 1.75h5.25L12.5 5v9.25h-8.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 1.75v3.5h3.5M6.25 8.5h4M6.25 11h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-github" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+  <symbol id="i-data" viewBox="0 0 16 16"><ellipse cx="8" cy="3.75" rx="5.25" ry="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2.75 3.75v8.5c0 1.1 2.35 2 5.25 2s5.25-.9 5.25-2v-8.5M2.75 8c0 1.1 2.35 2 5.25 2s5.25-.9 5.25-2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 16 16"><path fill="currentColor" d="M2.5 13V9.2c0-2.9 1.3-4.9 3.9-6l.7 1.2C5.6 5.1 4.9 6.2 4.8 7.6h2.1V13zm6.6 0V9.2c0-2.9 1.3-4.9 3.9-6l.7 1.2c-1.5.7-2.2 1.8-2.3 3.2h2.1V13z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 16 16"><path fill="currentColor" d="M4.5 2.75v10.5L13 8z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 16 16"><path fill="currentColor" d="M4 2.75h2.75v10.5H4zM9.25 2.75H12v10.5H9.25z"/></symbol>
+  <symbol id="i-restart" viewBox="0 0 16 16"><path d="M3.25 8a4.75 4.75 0 1 0 1.4-3.36M3.25 2.5v2.75H6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.25 8.5 3 3 6.5-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 16 16"><path d="m4 4 8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="topnav" aria-label="Sections">
+  <div class="topnav-inner">
+    <a class="topnav-title" href="#top">Event-Aligned WAM</a>
+    <div class="topnav-links">
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#explorer">Demos</a>
+      <a href="#real-world">Real world</a>
+      <a href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-content">
+  <p class="venue">Preprint · 2026</p>
+  <h1><span class="title-accent">Event-Aligned</span> Visual Action Reasoning <span class="title-sub">for World Action Models</span></h1>
+  <!-- TODO_AUTHOR_URL: wrap a name in <a href="..."> to link a homepage -->
+  <ul class="authors" aria-label="Authors">
+    <li>Xiaomeng Yang</li>
+    <li>Yushu Wu</li>
+    <li>Yi Gao</li>
+    <li>Yuhao Lei</li>
+    <li>Xuan Zhang</li>
+    <li>Pu Zhao</li>
+    <li>Yanzhi Wang</li>
+  </ul>
+  <p class="affil">Northeastern University</p>
+  <div class="links">
+    <a class="btn" href="https://arxiv.org/abs/2610.09427"><svg aria-hidden="true"><use href="#i-paper"/></svg>Paper</a>
+    <a class="btn" href="https://github.com/Xiaomeng-Yang/Event-aligned-WAM"><svg aria-hidden="true"><use href="#i-github"/></svg>Code</a>
+    <a class="btn" href="https://huggingface.co/collections/Xun49/event-aligned"><svg aria-hidden="true"><use href="#i-data"/></svg>Data &amp; models</a>
+    <a class="btn" href="#bibtex"><svg aria-hidden="true"><use href="#i-quote"/></svg>BibTeX</a>
+  </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="teaser" aria-label="Overview figure">
+  <figure class="fig fig-teaser">
+    <div class="teaser-grid">
+      <div class="subfig">
+      <a class="zoom" href="static/figures/motivation_a.webp" aria-label="Open figure (a) at full size">
+        <img src="static/figures/motivation_a.webp" width="2639" height="965" fetchpriority="high"
+             alt="Twelve sampled frames over a demonstration with approach, grasp, transport and release phases, shown twice. Episode Uniform, as in LingBot-VA, samples at fixed intervals, so most frames fall in the long approach and transport transitions. Event-Aligned, ours, places the frames around the grasp and release interactions and their evidence phases.">
+      </a>
+      <p class="subcap"><b>(a)</b> Visual-action chunk granularity</p>
+      </div>
+      <div class="subfig">
+      <a class="zoom" href="static/figures/motivation_b.webp" aria-label="Open figure (b) at full size">
+        <img src="static/figures/motivation_b.webp" width="944" height="839"
+             alt="Bar chart of DOMINO success rate at a matched budget of training slots: Episode Uniform 29.17 percent, Event-Aligned (ours) 42.83 percent.">
+      </a>
+      <p class="subcap"><b>(b)</b> DOMINO success rate</p>
+      </div>
+    </div>
+    <figcaption><b>Interaction-dependent temporal granularity of visual reasoning.</b>
+      (a) Our event-aligned visual action reasoning framework organizes visual-action targets around interaction events and transitions.
+      (b) DOMINO success rates under a matched sequence budget of training visual-action slots.</figcaption>
+  </figure>
+</section>
+
+<section class="stats" aria-label="Key results">
+  <div class="stat">
+    <p class="stat-label">DOMINO success rate</p>
+    <p class="stat-value">42.83%</p>
+    <p class="stat-delta good"><span aria-hidden="true">▲</span> +10.26 points vs. LingBot-VA (32.57%)</p>
+  </div>
+  <div class="stat">
+    <p class="stat-label">RoboTwin 2.0 average success rate</p>
+    <p class="stat-value">92.30%</p>
+    <p class="stat-delta good"><span aria-hidden="true">▲</span> +1.09 points vs. LingBot-VA (91.21%)</p>
+  </div>
+  <div class="stat">
+    <p class="stat-label">DOMINO Level 1 → 2 transfer, no adaptation</p>
+    <p class="stat-value">29.4%</p>
+    <p class="stat-delta good"><span aria-hidden="true">▲</span> vs. 16.9% for LingBot-VA; Level 3: 9.7% vs. 6.8%</p>
+  </div>
+  <div class="stat">
+    <p class="stat-label">Imagination chunks per episode</p>
+    <p class="stat-value">4.49</p>
+    <p class="stat-delta good"><span aria-hidden="true">▼</span> vs. 6.22 for LingBot-VA, on episodes both solve</p>
+  </div>
+</section>
+
+<section id="method" class="section" aria-labelledby="h-method">
+  <div class="section-inner">
+  <h2 id="h-method"><span class="section-number" aria-hidden="true">01</span>Method</h2>
+  <div class="prose">
+    <p>We propose an event-aligned visual action reasoning framework that organizes visual prediction according to the reasoning demands of robot manipulation. Rather than treating visual prediction as a uniform continuation of the sampled trajectory, our framework structures visual reasoning around task-relevant interactions and the visual context needed to support the corresponding actions. It consists of event-aligned visual-action reasoning and execution validity prediction.</p>
+  </div>
+
+  <h3 class="center-h">Three rules for event-aligned chunks</h3>
+  <ol class="rules">
+    <li class="rule">
+      <span class="rule-n">Rule 1</span>
+      <h4>Event boundaries</h4>
+      <p>Keep each chunk within one event: one chunk per transition, one or more per interaction.</p>
+    </li>
+    <li class="rule">
+      <span class="rule-n">Rule 2</span>
+      <h4>Phase-dependent density</h4>
+      <p>Keep interaction evidence at native resolution and sample surrounding motion more sparsely.</p>
+    </li>
+    <li class="rule">
+      <span class="rule-n">Rule 3</span>
+      <h4>Interaction boundaries</h4>
+      <p>Preserve the first and last frame of each interaction to retain its starting and ending context.</p>
+    </li>
+  </ol>
+
+  <figure class="fig fig-wide fig-framework">
+    <div class="subfig">
+      <div class="scroll-x" tabindex="0" role="region" aria-label="Framework panel (a); scrolls horizontally on small screens">
+        <a class="zoom" href="static/figures/framework_train.webp" aria-label="Open panel (a) at full size">
+          <img class="fw-train" src="static/figures/framework_train.webp" width="3066" height="1028" loading="lazy"
+               alt="An annotated 16-frame trajectory with transition, grasp, transition and release events is reorganized into event-aligned visual targets of four frames each. Each target frame keeps its paired action. Padded repeats of frames 15 and 16 get validity target 0. The WAM is trained on the visual, action and validity predictions with a video loss, an action loss and a weighted execution-validity loss.">
+        </a>
+      </div>
+      <p class="subcap"><b>(a)</b> Event-aligned visual-action chunk construction and joint training</p>
+    </div>
+    <div class="subfig">
+      <div class="scroll-x" tabindex="0" role="region" aria-label="Framework panel (b); scrolls horizontally on small screens">
+        <a class="zoom" href="static/figures/framework_inference.webp" aria-label="Open panel (b) at full size">
+          <img class="fw-infer" src="static/figures/framework_inference.webp" width="3263" height="333" loading="lazy"
+               alt="Inference loop: from the current observation, instruction and history, the WAM predicts a visual chunk of four frames, then generates four actions with a predicted validity mask 1, 0, 1, 0. Only actions a1 and a3 are executed, and the new observation is fed back.">
+        </a>
+      </div>
+      <p class="subcap"><b>(b)</b> Visual-guided action generation with execution validity prediction</p>
+    </div>
+    <figcaption><b>Interaction-Structured Visual Reasoning framework.</b> Event-aligned chunks allocate visual reasoning according to interaction structure, while execution validity prediction identifies which generated actions to execute.</figcaption>
+  </figure>
+  </div>
+</section>
+
+<section id="results" class="section section-tinted" aria-labelledby="h-results">
+  <div class="section-inner">
+  <h2 id="h-results"><span class="section-number" aria-hidden="true">02</span>Results</h2>
+  <div class="prose">
+    <p>We evaluate on <a href="https://h-embodvis.github.io/DOMINO/">DOMINO</a> (35 dynamic-manipulation tasks) and <a href="https://arxiv.org/abs/2506.18088">RoboTwin 2.0</a> (50 bimanual tasks). SR denotes success rate; MS denotes manipulation score.</p>
+  </div>
+
+  <h3 class="center-h">Benchmarks</h3>
+  <div class="table-wrap" role="region" aria-labelledby="cap-main" tabindex="0">
+<!-- BEGIN GENERATED:table-main -->
+<table aria-describedby="cap-main">
+<thead>
+<tr><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="2">DOMINO</th><th scope="colgroup" colspan="3">RoboTwin 2.0</th></tr>
+<tr><th scope="col">SR</th><th scope="col">MS</th><th scope="col">Clean SR</th><th scope="col">Rand. SR</th><th scope="col">Avg. SR</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">π<sub>0</sub></th><td>8.17</td><td>23.96</td><td>65.92</td><td>58.40</td><td>62.16</td></tr>
+<tr><th scope="row">π<sub>0.5</sub></th><td>9.63</td><td>26.17</td><td>82.74</td><td>76.76</td><td>79.75</td></tr>
+<tr><th scope="row">PUMA</th><td>17.20</td><td>34.97</td><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td></tr>
+<tr><th scope="row">DynamicWAM<sup class="fn">*</sup></th><td>38.20</td><td>53.20</td><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td></tr>
+<tr><th scope="row">ABot-M0</th><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td><td>81.20</td><td>80.40</td><td>80.80</td></tr>
+<tr><th scope="row">Motus</th><td class="na"><span aria-label="not reported">–</span></td><td class="na"><span aria-label="not reported">–</span></td><td>88.66</td><td>87.02</td><td>87.80</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="row">ImageWAM</th><td>18.86</td><td>35.47</td><td><strong>93.20</strong></td><td><strong>93.56</strong></td><td><strong>93.38</strong></td></tr>
+<tr><th scope="row">Fast-WAM</th><td>19.09</td><td>35.33</td><td>91.88</td><td>91.78</td><td>91.83</td></tr>
+<tr><th scope="row" rowspan="2">LingBot-VA</th><td rowspan="2">32.57</td><td rowspan="2">45.55</td><td>92.93</td><td>91.55</td><td>92.24</td></tr>
+<tr><td>92.18<sup>†</sup></td><td>90.24<sup>†</sup></td><td>91.21<sup>†</sup></td></tr>
+</tbody>
+<tbody>
+<tr class="ours"><th scope="row">Ours</th><td><strong>42.83</strong></td><td><strong>55.92</strong></td><td>93.02</td><td>91.58</td><td>92.30</td></tr>
+</tbody>
+</table>
+<!-- END GENERATED:table-main -->
+  </div>
+  <p class="table-cap" id="cap-main">LingBot-VA on RoboTwin: published results (upper row) and our re-evaluation under the same inference setting as ours (†). <sup>*</sup>DynamicWAM uses 150 clean and 150 randomized demonstrations per task.</p>
+  <div class="prose">
+    <p>Our method reaches <b>42.83% SR on DOMINO</b>, a 10.26-point gain over LingBot-VA, and <b>92.30% average SR on RoboTwin 2.0</b>, up 1.09 points over LingBot-VA (91.21%) under the same evaluation setting.</p>
+  </div>
+
+  <div class="split split-transfer">
+    <div>
+      <h3 id="transfer">Transfer across DOMINO levels</h3>
+      <div class="table-wrap" role="region" aria-labelledby="cap-transfer" tabindex="0">
+<!-- BEGIN GENERATED:table-transfer -->
+<table aria-describedby="cap-transfer">
+<thead>
+<tr><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="2">L1 → L2</th><th scope="colgroup" colspan="2">L1 → L3</th></tr>
+<tr><th scope="col">SR</th><th scope="col">MS</th><th scope="col">SR</th><th scope="col">MS</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">PUMA</th><td>10.5</td><td>30.28</td><td>4.6</td><td>20.16</td></tr>
+<tr><th scope="row">ImageWAM</th><td>13.3</td><td>30.44</td><td>2.8</td><td>15.09</td></tr>
+<tr><th scope="row">Fast-WAM</th><td>13.5</td><td>31.56</td><td>2.4</td><td>15.34</td></tr>
+<tr><th scope="row">LingBot-VA</th><td>16.9</td><td>30.37</td><td>6.8</td><td>19.36</td></tr>
+<tr class="ours"><th scope="row">Ours</th><td><strong>29.4</strong></td><td><strong>45.42</strong></td><td><strong>9.7</strong></td><td><strong>24.23</strong></td></tr>
+</tbody>
+</table>
+<!-- END GENERATED:table-transfer -->
+      </div>
+      <p class="table-cap" id="cap-transfer">Level 1 policies evaluated on ten tasks at Levels 2 and 3. Only PUMA uses target-level adaptation (LoRA).</p>
+    </div>
+    <div class="prose">
+      <p>Our policy achieves the highest SR and MS at both levels without target-level adaptation. Level 3 success remains low across all methods.</p>
+    </div>
+  </div>
+
+  <h3 class="center-h" id="ablation">What matters: evidence, context and validity</h3>
+  <div class="table-wrap wide" role="region" aria-labelledby="cap-ablation" tabindex="0">
+<!-- BEGIN GENERATED:table-ablation -->
+<table aria-describedby="cap-ablation">
+<thead>
+<tr><th scope="col">Sampling</th><th scope="col">Granularity</th><th scope="col">Placement</th><th scope="col" class="num">Slots</th><th scope="col">Share in evidence</th><th scope="col" class="bar-col">DOMINO SR</th><th scope="col">MS</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LingBot-VA (reference)</th><td>Episode</td><td>Uniform</td><td class="num">291,296</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:32.35%"></span></span><span>32.35%</span></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:65.14%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">32.57</span></td><td>45.55</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="row">Episode Uniform</th><td>Episode</td><td>Uniform</td><td class="num">211,664</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:38.25%"></span></span><span>38.25%</span></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:58.34%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">29.17</span></td><td>41.32</td></tr>
+<tr><th scope="row">Event Uniform</th><td>Event</td><td>Uniform</td><td class="num">211,664</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:47.55%"></span></span><span>47.55%</span></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:79.20%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">39.60</span></td><td>52.26</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="row">Reduced Evidence</th><td>Event</td><td>Transition-Protected</td><td class="num">268,592</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:23.05%"></span></span><span>23.05%</span></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:72.34%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">36.17</span></td><td>48.36</td></tr>
+<tr><th scope="row">Reduced Context</th><td>Event</td><td>Evidence-protected</td><td class="num">173,216</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:67.03%"></span></span><span>67.03%</span></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:75.66%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">37.83</span></td><td>52.99</td></tr>
+<tr class="ours"><th scope="row">Event-aligned (Ours)</th><td>Event</td><td>Evidence-protected</td><td class="num">211,664</td><td class="share"><span class="share-track" aria-hidden="true"><span class="share-fill" style="--w:54.86%"></span></span><span>54.86%</span></td><td class="bar ours"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:85.66%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val"><strong>42.83</strong></span></td><td><strong>55.92</strong></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="row" colspan="3">Event-aligned w/o execution validity head</th><td class="num">211,664</td><td></td><td class="bar base"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:78.22%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val">39.11</span></td><td>52.33</td></tr>
+<tr class="ours"><th scope="row" colspan="3">Event-aligned w/ execution validity head</th><td class="num">211,664</td><td></td><td class="bar ours"><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--w:85.66%"></span><span class="bar-ref" style="--x:65.14%"></span></span><span class="bar-val"><strong>42.83</strong></span></td><td><strong>55.92</strong></td></tr>
+</tbody>
+</table>
+<!-- END GENERATED:table-ablation -->
+  </div>
+  <p class="table-cap" id="cap-ablation">Slots include padded repetitions; <em>share in evidence</em> measures how many fall within interaction evidence. SR bars use a 0–50 scale; the line marks LingBot-VA (32.57). All variants except the LingBot-VA reference and no-head ablation use the validity head.</p>
+  <div class="prose">
+    <p>Event alignment, dense interaction evidence and surrounding context all improve performance. The execution validity head raises SR from <b>39.11% to 42.83%</b>.</p>
+  </div>
+
+  <h3 class="center-h" id="execution">Fewer imagination calls, fewer commands</h3>
+  <div class="split">
+    <div class="prose">
+      <p>On 738 episodes both methods solve, ours uses fewer visual rollouts and action commands. Values are averaged across tasks.</p>
+    </div>
+    <div class="minibar-group">
+<!-- BEGIN GENERATED:exec-bars -->
+<figure class="minibars"><figcaption>Visual rollouts requested <span>per episode</span></figcaption>
+<div class="minibar base"><span class="mb-label">LingBot-VA</span><span class="mb-track"><span class="mb-fill" style="--w:100.00%"></span></span><span class="mb-val">6.22</span></div>
+<div class="minibar ours"><span class="mb-label">Ours</span><span class="mb-track"><span class="mb-fill" style="--w:72.19%"></span></span><span class="mb-val">4.49</span></div>
+</figure>
+<figure class="minibars"><figcaption>Action commands issued <span>per episode</span></figcaption>
+<div class="minibar base"><span class="mb-label">LingBot-VA</span><span class="mb-track"><span class="mb-fill" style="--w:100.00%"></span></span><span class="mb-val">167.18</span></div>
+<div class="minibar ours"><span class="mb-label">Ours</span><span class="mb-track"><span class="mb-fill" style="--w:63.68%"></span></span><span class="mb-val">106.46</span></div>
+</figure>
+<!-- END GENERATED:exec-bars -->
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="explorer" class="section" aria-labelledby="h-demos">
+  <div class="section-inner">
+  <h2 id="h-demos"><span class="section-number" aria-hidden="true">03</span>Demos</h2>
+  <p class="prose center-p">Choose a DOMINO task to compare rollouts and our model’s imagined future.</p>
+  <div class="task-picker seg" id="task-picker" role="group" aria-label="Task">
+    <button type="button" aria-pressed="true" data-task="scan_object">Scan Object</button>
+    <button type="button" aria-pressed="false" data-task="stamp_seal">Stamp Seal</button>
+    <button type="button" aria-pressed="false" data-task="put_bottles_dustbin">Put Bottles Dustbin</button>
+    <button type="button" aria-pressed="false" data-task="place_shoe">Place Shoe</button>
+    <button type="button" aria-pressed="false" data-task="shake_bottle_horizontally">Shake Bottle Horizontally</button>
+  </div>
+
+  <div class="explorer">
+    <div class="panel" id="panel-rollout" aria-labelledby="h-rollout">
+      <h4 id="h-rollout">Rollouts: LingBot-VA vs. ours</h4>
+      <div class="panel-body"></div>
+    </div>
+    <div class="panel" id="panel-pvr" aria-labelledby="h-pvr">
+      <h4 id="h-pvr">Prediction vs. reality</h4>
+      <div class="panel-body"></div>
+      <p class="table-cap">The real execution (left) next to our model's imagined future (right). While each chunk executes, the right half shows that chunk's last predicted frame. For visualization, predicted frames are decoded with video tokens integrated to s = 1.0; inference uses s = 0.6.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="real-world" class="section section-tinted" aria-labelledby="h-real">
+  <div class="section-inner">
+  <h2 id="h-real"><span class="section-number" aria-hidden="true">04</span>Real-world experiments</h2>
+  <div class="prose">
+    <p>We fine-tune on a Unitree G1 humanoid with Dex1-1 grippers for three bimanual tasks:
+    <b>Tennis Ball Insertion</b>, <b>Bimanual Cup Placement</b> and <b>Drawer Manipulation</b>.</p>
+  </div>
+  <div class="table-wrap narrow" role="region" aria-labelledby="cap-real" tabindex="0">
+<!-- BEGIN GENERATED:table-real -->
+<table aria-describedby="cap-real">
+<thead>
+<tr><th scope="col">Method</th><th scope="col">Tennis Ball Insertion</th><th scope="col">Bimanual Cup Placement</th><th scope="col">Drawer Manipulation</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LingBot-VA</th><td>44%</td><td>24%</td><td><strong>64%</strong></td></tr>
+<tr class="ours"><th scope="row">Ours</th><td><strong>52%</strong></td><td><strong>28%</strong></td><td>56%</td></tr>
+</tbody>
+</table>
+<!-- END GENERATED:table-real -->
+  </div>
+  <p class="table-cap center-p" id="cap-real">Success rate on three real-world tasks, 25 rollouts each.</p>
+  <div class="explorer real-world-explorer">
+    <div class="panel" id="panel-real-world" aria-labelledby="h-real-rollouts">
+      <h4 id="h-real-rollouts">Real-world task examples</h4>
+      <div class="panel-body">
+        <div class="vpair real-world-videos">
+          <div class="vbox">
+            <div class="vlabel" id="real-tennis-caption">Tennis Ball Insertion</div>
+            <div class="vframe">
+              <video controls muted playsinline preload="none" width="320" height="256"
+                     poster="static/videos/real_world/tennis_obs.jpg" aria-labelledby="real-tennis-caption">
+                <source src="static/videos/real_world/tennis_obs.mp4" type="video/mp4">
+                <a href="static/videos/real_world/tennis_obs.mp4">Watch Tennis Ball Insertion</a>.
+              </video>
+            </div>
+          </div>
+          <div class="vbox">
+            <div class="vlabel" id="real-cup-caption">Bimanual Cup Placement</div>
+            <div class="vframe">
+              <video controls muted playsinline preload="none" width="320" height="256"
+                     poster="static/videos/real_world/cup_obs.jpg" aria-labelledby="real-cup-caption">
+                <source src="static/videos/real_world/cup_obs.mp4" type="video/mp4">
+                <a href="static/videos/real_world/cup_obs.mp4">Watch Bimanual Cup Placement</a>.
+              </video>
+            </div>
+          </div>
+          <div class="vbox">
+            <div class="vlabel" id="real-drawer-caption">Drawer Manipulation</div>
+            <div class="vframe">
+              <video controls muted playsinline preload="none" width="320" height="256"
+                     poster="static/videos/real_world/drawer_obs.jpg" aria-labelledby="real-drawer-caption">
+                <source src="static/videos/real_world/drawer_obs.mp4" type="video/mp4">
+                <a href="static/videos/real_world/drawer_obs.mp4">Watch Drawer Manipulation</a>.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="bibtex" class="section" aria-labelledby="h-bibtex">
+  <div class="section-inner">
+  <h2 id="h-bibtex"><span class="section-number" aria-hidden="true">05</span>BibTeX</h2>
+  <div class="bibtex">
+    <button class="copy-btn" type="button" data-copy="#bibtex-code">Copy</button>
+    <pre><code id="bibtex-code">@misc{yang2026eventaligned,
+  title         = {Event-Aligned Visual Action Reasoning for World Action Models},
+  author        = {Yang, Xiaomeng and Wu, Yushu and Gao, Yi and Lei, Yuhao and Zhang, Xuan and Zhao, Pu and Wang, Yanzhi},
+  year          = {2026},
+  eprint        = {2610.09427},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2610.09427}
+}</code></pre>
+    <p class="copy-status" aria-live="polite"></p>
+  </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>Event-Aligned Visual Action Reasoning for World Action Models · Northeastern University</p>
+  <p><a href="#top">Back to top</a></p>
+</footer>
+</body>
+</html>
