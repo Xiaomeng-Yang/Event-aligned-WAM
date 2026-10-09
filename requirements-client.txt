@@ -1,0 +1,5 @@
+# Image-only websocket example; no torch or simulator dependency.
+numpy==1.26.4
+Pillow
+websockets>=15
+msgpack

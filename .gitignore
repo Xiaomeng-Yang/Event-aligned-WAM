@@ -1,0 +1,10 @@
+*.pyc
+__pycache__/
+.venv/
+/model/
+models/
+outputs/
+train_out/
+wandb/
+*.log
+/.release/
